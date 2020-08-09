@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: shopeeng
+    
+server:
+  port: 8091
+  servlet: 
+    context-path: /shopeeng
+springdoc:
+  version: '@version@'
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    displayRequestDuration: true
+    tagsSorter: alpha

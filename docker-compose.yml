@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  mysql-service:
+    image: mysql:5.7
+    networks:
+      - spring-boot-mysql-network
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=shopeeng
+      - MYSQL_USER=root
+      
+  web-service:
+    image: ekz/shopeeng
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8091:8091"
+    networks:
+      - spring-boot-mysql-network
+    depends_on:
+      - mysql-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-service:3306/shopeeng?createDatabaseIfNotExist=true&autoReconnect=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+networks:
+  spring-boot-mysql-network:
+    driver: bridge
+    
